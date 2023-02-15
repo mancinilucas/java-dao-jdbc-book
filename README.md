@@ -31,7 +31,7 @@ As inserções no BD recebiam um ID único com auto incremento para facilitar a 
 
     4. Remoção de dados // delete()
 
-    5. Transações e tratamento de possíveis erros erros
+    5. Transações e tratamento de possíveis erros
     
     
 ## Stack utilizada
