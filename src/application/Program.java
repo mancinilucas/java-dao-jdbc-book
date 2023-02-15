@@ -26,6 +26,11 @@ public class Program {
         bookDao.insert(newBook);
         System.out.println("Inserted! New Id = " + newBook.getId());
 
+        System.out.println("\n===TESTE 4: Book update ====");
+        book = bookDao.findById(1);
+        book.setTitle("Poesia de Alvaro de Campos");
+        bookDao.update(book);
+        System.out.println("Update completed!");
 
     }
 }
