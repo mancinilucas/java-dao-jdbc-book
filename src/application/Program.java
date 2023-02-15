@@ -21,5 +21,11 @@ public class Program {
             System.out.println(obj);
         }
 
+        System.out.println("\n===TESTE 3: Book insert ====");
+        Book newBook = new Book(null, "Futuro Ancestral", "Ciencias Ambientais", "Ailton Krenak", 2022);
+        bookDao.insert(newBook);
+        System.out.println("Inserted! New Id = " + newBook.getId());
+
+
     }
 }

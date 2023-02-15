@@ -5,10 +5,7 @@ import db.DbException;
 import model.dao.BookDao;
 import model.entities.Book;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +23,40 @@ public class BookDaoJDBC implements BookDao {
 
     @Override
     public void insert(Book obj) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+              "INSERT INTO books "
+                    + "(title, genre, autor, release_year) "
+                    + "VALUES "
+                    + "(?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
 
+            st.setString(1, obj.getTitle());
+            st.setString(2, obj.getGenre());
+            st.setString(3, obj.getAutor());
+            st.setInt(4, obj.getReleaseYear());
+
+            int rowsAffected = st.executeUpdate();
+            if(rowsAffected > 0){
+                ResultSet rs = st.getGeneratedKeys();
+                if(rs.next()){
+                    int id = rs.getInt(1);
+                    obj.setId(id);
+                }
+                DB.closeResultSet(rs);
+            }
+            else {
+                throw new DbException("Unexpected error! No rows affected!");
+            }
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
