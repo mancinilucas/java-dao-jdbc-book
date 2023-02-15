@@ -50,12 +50,7 @@ public class BookDaoJDBC implements BookDao {
             st.setInt(1, id);
             rs = st.executeQuery();
             if(rs.next()){
-                Book book = new Book();
-                book.setId(rs.getInt("id"));
-                book.setTitle(rs.getString("title"));
-                book.setGenre(rs.getString("genre"));
-                book.setAutor(rs.getString("autor"));
-                book.setReleaseYear(rs.getInt("release_year"));
+                Book book = instantiateBook(rs);
                 return book;
             }
             return null;
@@ -69,8 +64,20 @@ public class BookDaoJDBC implements BookDao {
         }
     }
 
+    private Book instantiateBook(ResultSet rs)throws SQLException{
+        Book book = new Book();
+        book.setId(rs.getInt("id"));
+        book.setTitle(rs.getString("title"));
+        book.setGenre(rs.getString("genre"));
+        book.setAutor(rs.getString("autor"));
+        book.setReleaseYear(rs.getInt("release_year"));
+        return book;
+    }
+
     @Override
     public List<Book> findAll() {
         return null;
     }
+
+
 }
